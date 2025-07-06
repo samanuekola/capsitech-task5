@@ -9,7 +9,7 @@ function App() {
   const [todos, setTodos] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [completedMap, setCompletedMap] = useState({});
-axios.default.withCredentials=true;
+   axios.defaults.withCredentials=true;
   useEffect(() => {
     axios.get(API_URL).then((res) => setTodos(res.data));
   }, []);
