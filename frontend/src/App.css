@@ -1,0 +1,111 @@
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.app {
+  background: linear-gradient(135deg, #3b3dbd, #933cc9);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.todo-box {
+  background: white;
+  padding: 2rem;
+  width: 95%;
+  max-width: 400px;
+  border-radius: 15px;
+  box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.title {
+  margin: 0 0 20px;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.input-wrapper {
+  display: flex;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.input-wrapper input {
+  flex: 1;
+  padding: 10px 16px;
+  border: 1px solid #ccc;
+  border-radius: 50px 0 0 50px;
+  outline: none;
+  font-size: 15px;
+}
+
+.input-wrapper button {
+  background: #ff5e2e;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  border-radius: 0 50px 50px 0;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.input-wrapper button:hover {
+  background: #e65325;
+}
+
+.task-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.task-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.task-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+}
+
+.task-left input[type="checkbox"] {
+  accent-color: #ff5e2e;
+  cursor: pointer;
+}
+
+.right-icons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.edit-btn {
+  color: #1976d2;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.delete-btn {
+  color: #ff4c4c;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.edit-btn:hover {
+  color: #0d47a1;
+}
+
+.delete-btn:hover {
+  color: #d50000;
+}
