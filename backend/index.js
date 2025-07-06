@@ -10,7 +10,7 @@ app.use(express.json());
 const MONGO_URI = "mongodb+srv://samanuesam:samanue123@cluster0.jkqgpvi.mongodb.net/todos?retryWrites=true&w=majority&appName=Cluster0";
 
 app.use(cors({
-  origin: 'https://task-opal-seven.vercel.app',  // No trailing slash
+  origin: 'https://capsitech-task5.vercel.app',  
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
