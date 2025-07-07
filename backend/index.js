@@ -4,7 +4,6 @@ const { Validator } = require('node-input-validator');
 const cors = require('cors');
 
 const app = express();
-app.use(cors());
 app.use(express.json());
 
 const MONGO_URI = "mongodb+srv://samanuesam:samanue123@cluster0.jkqgpvi.mongodb.net/todos?retryWrites=true&w=majority&appName=Cluster0";
