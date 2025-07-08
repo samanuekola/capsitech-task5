@@ -21,17 +21,17 @@ const todoSchema = new mongoose.Schema({
 const Todo = mongoose.model('Todo', todoSchema);
 
 const validateTodo = async (req, res, next) => {
-  const v = new Validator(req.body, {
-    title: 'required|string|minLength:3',
-    completed: 'boolean'
-  });
-
+  const rules = { completed: 'boolean' };
+  if (req.method === 'POST') {
+    rules.title = 'required|string|minLength:3';
+  } else if (req.body.title !== undefined) {
+    rules.title = 'string|minLength:3';
+  }
+  const v = new Validator(req.body, rules);
   const matched = await v.check();
   if (!matched) return res.status(422).json({ errors: v.errors });
-
   next();
 };
-
 
 app.post('/api/todos', validateTodo, async (req, res) => {
   try {
@@ -43,7 +43,6 @@ app.post('/api/todos', validateTodo, async (req, res) => {
   }
 });
 
-
 app.get('/api/todos', async (req, res) => {
   try {
     const todos = await Todo.find().sort({ createdAt: -1 });
@@ -52,7 +51,6 @@ app.get('/api/todos', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch todos' });
   }
 });
-
 
 app.put('/api/todos/:id', validateTodo, async (req, res) => {
   try {
@@ -64,7 +62,6 @@ app.put('/api/todos/:id', validateTodo, async (req, res) => {
   }
 });
 
-
 app.delete('/api/todos/:id', async (req, res) => {
   try {
     const result = await Todo.findByIdAndDelete(req.params.id);
@@ -75,11 +72,9 @@ app.delete('/api/todos/:id', async (req, res) => {
   }
 });
 
-
 mongoose.connect(MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => {
-  console.log(' MongoDB connected');
-  app.listen(5000, () => console.log('🚀 Server running on http://localhost:5000'));
+  app.listen(5000, () => console.log('Server running on http://localhost:5000'));
 }).catch(err => console.error('MongoDB connection error:', err));
