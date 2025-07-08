@@ -8,27 +8,20 @@ function App() {
   const [task, setTask] = useState('');
   const [todos, setTodos] = useState([]);
   const [editingId, setEditingId] = useState(null);
-  const [completedMap, setCompletedMap] = useState({});
-   axios.defaults.withCredentials=true;
+  axios.defaults.withCredentials=true;
   useEffect(() => {
     axios.get(API_URL).then((res) => setTodos(res.data));
   }, []);
 
   const addTodo = async () => {
-    if (task.trim().length < 3) {
-      alert("Task must be at least 3 characters long.");
-      return;
-    }
-    const res = await axios.post(API_URL, { title: task });
+    if (task.trim().length < 3) return alert("Task must be at least 3 characters long.");
+    const res = await axios.post(API_URL, { title: task, completed: false });
     setTodos([res.data, ...todos]);
     setTask('');
   };
 
   const updateTodo = async () => {
-    if (!editingId || task.trim().length < 3) {
-      alert("Task must be at least 3 characters long.");
-      return;
-    }
+    if (!editingId || task.trim().length < 3) return alert("Task must be at least 3 characters long.");
     await axios.put(`${API_URL}/${editingId}`, { title: task });
     const updatedTodos = todos.map(todo =>
       todo._id === editingId ? { ...todo, title: task } : todo
@@ -43,11 +36,13 @@ function App() {
     setTodos(todos.filter(todo => todo._id !== id));
   };
 
-  const toggleComplete = (id) => {
-    setCompletedMap(prev => ({
-      ...prev,
-      [id]: !prev[id]
-    }));
+  const toggleComplete = async (id, currentStatus) => {
+    const updatedStatus = !currentStatus;
+    const res = await axios.put(`${API_URL}/${id}`, { completed: updatedStatus });
+    const updatedTodos = todos.map(todo =>
+      todo._id === id ? res.data : todo
+    );
+    setTodos(updatedTodos);
   };
 
   const handleEdit = (todo) => {
@@ -83,10 +78,10 @@ function App() {
               <label className="task-left">
                 <input
                   type="checkbox"
-                  checked={completedMap[todo._id] || false}
-                  onChange={() => toggleComplete(todo._id)}
+                  checked={todo.completed}
+                  onChange={() => toggleComplete(todo._id, todo.completed)}
                 />
-                <span style={{ textDecoration: completedMap[todo._id] ? 'line-through' : 'none' }}>
+                <span style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
                   {todo.title}
                 </span>
               </label>
