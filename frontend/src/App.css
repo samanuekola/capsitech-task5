@@ -109,3 +109,8 @@ body, html, #root {
 .delete-btn:hover {
   color: #d50000;
 }
+@media (max-width:345px) {
+  .todo-box{
+    padding: 1rem;
+  }
+}
